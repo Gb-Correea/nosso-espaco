@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Nosso Espaço ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+
+<div id="admin-app">
+  <header id="admin-header">
+    <div class="header-inner">
+      <a href="/" class="back-btn">← Ver Apresentação</a>
+      <h1>Painel Administrativo <span>💕</span></h1>
+    </div>
+  </header>
+
+  <div id="admin-content">
+
+    <!-- Tabs -->
+    <div id="tab-bar">
+      <button class="tab-btn active" data-tab="media">📸 Mídia</button>
+      <button class="tab-btn" data-tab="music">🎵 Música</button>
+      <button class="tab-btn" data-tab="messages">💬 Mensagens</button>
+      <button class="tab-btn" data-tab="timeline">📅 Timeline</button>
+      <button class="tab-btn" data-tab="settings">⚙️ Config</button>
+    </div>
+
+    <!-- Media Tab -->
+    <div id="tab-media" class="tab-panel active">
+      <div class="panel-card">
+        <h2>Fotos & Vídeos</h2>
+        
+        <div class="upload-zones">
+          <div class="drop-zone" id="photo-drop">
+            <div class="drop-icon">📷</div>
+            <p>Arraste fotos aqui</p>
+            <p class="drop-sub">PNG, JPG, GIF, WEBP</p>
+            <input type="file" id="photo-input" accept=".png,.jpg,.jpeg,.gif,.webp,.avif" multiple hidden>
+            <button class="upload-btn" onclick="document.getElementById('photo-input').click()">Selecionar Fotos</button>
+          </div>
+          <div class="drop-zone" id="video-drop">
+            <div class="drop-icon">🎬</div>
+            <p>Arraste vídeos aqui</p>
+            <p class="drop-sub">MP4, WEBM, MOV</p>
+            <input type="file" id="video-input" accept=".mp4,.webm,.mov,.avi" multiple hidden>
+            <button class="upload-btn" onclick="document.getElementById('video-input').click()">Selecionar Vídeos</button>
+          </div>
+        </div>
+
+        <div id="upload-progress" style="display:none">
+          <div class="progress-bar"><div id="progress-fill"></div></div>
+          <p id="progress-text">Enviando...</p>
+        </div>
+
+        <h3>Fotos <span id="photo-count" class="count-badge">{{ photos|length }}</span></h3>
+        <div id="photo-grid" class="media-grid">
+          {% for p in photos %}
+          <div class="media-item" data-file="{{ p }}" data-type="photo">
+            <img src="/static/media/photos/{{ p }}" alt="{{ p }}">
+            <button class="delete-btn" onclick="deleteMedia('photo','{{ p }}')">✕</button>
+            <span class="media-name">{{ p }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <h3>Vídeos <span id="video-count" class="count-badge">{{ videos|length }}</span></h3>
+        <div id="video-grid" class="media-grid">
+          {% for v in videos %}
+          <div class="media-item" data-file="{{ v }}" data-type="video">
+            <video src="/static/media/videos/{{ v }}" muted></video>
+            <button class="delete-btn" onclick="deleteMedia('video','{{ v }}')">✕</button>
+            <span class="media-name">{{ v }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Music Tab -->
+    <div id="tab-music" class="tab-panel">
+      <div class="panel-card">
+        <h2>Playlist de Músicas 🎵</h2>
+        <div class="drop-zone" id="music-drop">
+          <div class="drop-icon">🎵</div>
+          <p>Arraste músicas aqui</p>
+          <p class="drop-sub">MP3, WAV, OGG, M4A</p>
+          <input type="file" id="music-input" accept=".mp3,.wav,.ogg,.flac,.m4a" multiple hidden>
+          <button class="upload-btn" onclick="document.getElementById('music-input').click()">Selecionar Músicas</button>
+        </div>
+        <div id="music-list" class="music-list-admin">
+          {% for m in music %}
+          <div class="music-row" data-file="{{ m }}">
+            <span class="music-icon">🎵</span>
+            <span class="music-name">{{ m }}</span>
+            <button class="delete-btn-sm" onclick="deleteMedia('music','{{ m }}')">✕</button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Messages Tab -->
+    <div id="tab-messages" class="tab-panel">
+      <div class="panel-card">
+        <h2>Mensagens Românticas 💬</h2>
+        <div class="msg-add">
+          <textarea id="new-message" placeholder="Escreva uma mensagem de amor..." rows="3"></textarea>
+          <button class="save-btn" onclick="addMessage()">+ Adicionar Mensagem</button>
+        </div>
+        <div id="messages-list"></div>
+      </div>
+    </div>
+
+    <!-- Timeline Tab -->
+    <div id="tab-timeline" class="tab-panel">
+      <div class="panel-card">
+        <h2>Nossa Linha do Tempo 📅</h2>
+        <div class="timeline-add">
+          <div class="form-row">
+            <label>Data</label>
+            <input type="date" id="tl-date">
+          </div>
+          <div class="form-row">
+            <label>Evento</label>
+            <input type="text" id="tl-title" placeholder="Ex: Primeiro encontro...">
+          </div>
+          <div class="form-row">
+            <label>Emoji</label>
+            <input type="text" id="tl-emoji" placeholder="💕" maxlength="4">
+          </div>
+          <button class="save-btn" onclick="addTimeline()">+ Adicionar Evento</button>
+        </div>
+        <div id="timeline-admin-list"></div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div id="tab-settings" class="tab-panel">
+      <div class="panel-card">
+        <h2>Configurações ⚙️</h2>
+
+        <div class="settings-grid">
+          <div class="setting-group">
+            <label>Nome 1</label>
+            <input type="text" id="s-name1" value="{{ config.couple_names[0] }}">
+          </div>
+          <div class="setting-group">
+            <label>Nome 2</label>
+            <input type="text" id="s-name2" value="{{ config.couple_names[1] }}">
+          </div>
+          <div class="setting-group">
+            <label>Data de início do relacionamento</label>
+            <input type="date" id="s-startdate" value="{{ config.start_date }}">
+          </div>
+          <div class="setting-group">
+            <label>Intervalo do carrossel (ms)</label>
+            <input type="number" id="s-interval" value="{{ config.carousel_interval }}" min="1000" max="30000" step="500">
+          </div>
+          <div class="setting-group">
+            <label>Velocidade das animações (ms)</label>
+            <input type="number" id="s-animspeed" value="{{ config.animation_speed }}" min="300" max="3000" step="100">
+          </div>
+          <div class="setting-group checkbox-group">
+            <label>Autoplay de música</label>
+            <input type="checkbox" id="s-autoplay" {% if config.autoplay_music %}checked{% endif %}>
+          </div>
+          <div class="setting-group checkbox-group">
+            <label>Modo aleatório</label>
+            <input type="checkbox" id="s-shuffle" {% if config.shuffle_media %}checked{% endif %}>
+          </div>
+        </div>
+
+        <button class="save-btn big" onclick="saveSettings()">💾 Salvar Configurações</button>
+        <p id="save-status" class="save-status"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let CONFIG = {{ config | tojson }};
+</script>
+<script src="/static/js/admin.js"></script>
+</body>
+</html>

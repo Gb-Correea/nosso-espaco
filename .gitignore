@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+static/media/photos/*
+static/media/videos/*
+static/media/music/*
+!static/media/photos/.gitkeep
+!static/media/videos/.gitkeep
+!static/media/music/.gitkeep
+dist/
+build/

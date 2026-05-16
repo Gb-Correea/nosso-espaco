@@ -1,0 +1,34 @@
+{
+  "couple_names": ["Gabriel", "Emily"],
+  "start_date": "2026-02-11",
+  "carousel_interval": 5000,
+  "animation_speed": 1200,
+  "autoplay_music": false,
+  "shuffle_media": false,
+  "theme": "dark_rose",
+  "messages": [
+    "Cada momento ao seu lado é um presente 💕",
+    "Você é o lar que sempre procurei 🌹",
+    "Com você, até o silêncio é lindo ✨",
+    "Meu coração tem seu nome gravado 💝",
+    "Você transforma meus dias comuns em extraordinários 🌸",
+    "Cada sorriso seu é meu lugar favorito no mundo 💫",
+    "Obrigado por existir e fazer parte da minha vida 🦋",
+    "Te amar é a coisa mais natural que já senti 💖"
+  ],
+  "timeline": [
+    {"date": "2026-02-11", "title": "O dia em que começamos a nos falar", "emoji": "💬"},
+    {"date": "2026-02-21", "title": "Nosso primeiro encontro no parque de diversões", "emoji": "🎡"},
+    {"date": "2026-02-28", "title": "Nosso segundo encontro no cinema pra assistir um filme de terror", "emoji": "🎬"},
+    {"date": "2026-03-11", "title": "O primeiro presente que eu te dei, por mais que não tenha sido completo", "emoji": "🎁"},
+    {"date": "2026-03-14", "title": "Nosso terceiro encontro no barzinho", "emoji": "🍻"},
+    {"date": "2026-03-29", "title": "O primeiro buquê que te dei, porque queria que soubesse o quão especial você é", "emoji": "💐"},
+    {"date": "2026-04-04", "title": "Conheci a sua família e fiz amizade com um pouco de conversa", "emoji": "👨‍👩‍👧"},
+    {"date": "2026-04-11", "title": "Você me chamou pra ir pra sua casa dormir com você", "emoji": "🌙"},
+    {"date": "2026-04-17", "title": "Um dia muito especial — o dia da sua formatura", "emoji": "🎓"},
+    {"date": "2026-04-18", "title": "Primeiro encontro que você me chamou pra assistir Crepúsculo", "emoji": "🧛"},
+    {"date": "2026-04-21", "title": "Fui te ver usando um pretexto, mas a verdade é que eu só queria te ver naquele dia", "emoji": "😏"},
+    {"date": "2026-04-24", "title": "Te dei um buquê de rosas para comemorar sua conquista", "emoji": "🌹"},
+    {"date": "2026-05-01", "title": "Te presenteei com lírios — porque você me disse uma vez que eram as flores da paz", "emoji": "🌷"}
+  ]
+}
